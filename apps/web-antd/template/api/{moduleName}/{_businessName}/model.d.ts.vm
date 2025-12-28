@@ -1,0 +1,19 @@
+﻿import type { BaseCollectionModel } from 'pocketbase';
+
+export interface ${BusinessName} extends BaseCollectionModel {
+#foreach ($column in $columns)
+#if($column.list)
+  #if($column.comment)/**
+   * $column.comment
+   */
+#end
+	$column.name: $getUiTsType($column);
+#end
+#end
+#if ($table.tree)
+  /**
+    * 子对象
+    */
+  children: ${BusinessName}[];
+#end
+}
