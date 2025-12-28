@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Package",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}/server/main.go",
+      "cwd": "${workspaceFolder}/server",
+      "args": [
+        "serve",
+        "--dev"
+        // "--http=0.0.0.0:8888"
+      ]
+    }
+  ]
+}

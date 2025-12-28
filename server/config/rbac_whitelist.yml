@@ -1,0 +1,20 @@
+# RBAC 白名单配置
+# 如果某些 collection 不需要进行 RBAC 校验，可在此列出其名称。
+# 格式（YAML）示例：
+# collectionList:
+#   - collection_a
+#   - collection_b
+
+collectionList:
+  - role_menu
+  - role_dept
+  - user_role
+  - user_post
+  - dict_data
+  - dict_type
+  - global_config
+  - tenant
+ 
+permissionList:
+  - system:tenant:list
+  - system:tenant_package:list

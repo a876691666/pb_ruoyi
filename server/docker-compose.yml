@@ -1,0 +1,30 @@
+services:
+  pocketbase-ruoyi:
+    image: pocketbase-ruoyi:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pocketbase-ruoyi
+    ports:
+      - "8090:8090"
+    command:
+      - /pb/main
+      - serve
+      - --http=0.0.0.0:8090
+    working_dir: /pb
+    volumes:
+      # 持久化数据
+      - ./pb_data:/pb/pb_data
+      # 可选：对外暴露静态资源目录（如有需要会自动在宿主机创建）
+      - ./pb_public:/pb/pb_public
+      # 可选：挂载本地配置以便动态调整
+      - ./config:/pb/config:ro
+    restart: unless-stopped
+    # 资源限制：最大 128MB 内存，0.1 CPU（100m）
+    deploy:
+      resources:
+        limits:
+          cpus: "0.10"
+          memory: 128M
+    # 停止宽限，给应用一些时间优雅退出
+    stop_grace_period: 20s

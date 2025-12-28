@@ -1,0 +1,13 @@
+## data_scope 白名单配置
+# 指定在 data_scope 拼接逻辑中应被跳过的 collection 名称
+# 格式（YAML）示例：
+# collectionList:
+#   - collection_a
+
+collectionList:
+  - role_menu
+  - role_dept
+  - user_role
+  - user_post
+  - global_config
+  - tenant
