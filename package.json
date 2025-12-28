@@ -1,0 +1,29 @@
+{
+  "name": "pb_ruoyi",
+  "version": "1.0.0",
+  "description": "A PocketBase integration with RuoYi framework",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build:docs": "vitepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a876691666/pb_ruoyi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a876691666/pb_ruoyi/issues"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "markdown-it-container": "^4.0.0",
+    "postcss": "^8.5.6",
+    "sass-embedded": "^1.97.1",
+    "tailwindcss": "^4.1.18",
+    "typescript": "~5.9.3",
+    "unplugin-vue-components": "^30.0.0",
+    "vitepress": "2.0.0-alpha.15"
+  },
+  "homepage": "https://github.com/a876691666/pb_ruoyi#readme"
+}
