@@ -26,6 +26,15 @@ func RegisterRBAC(app *pocketbase.PocketBase) {
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 		se.Router.BindFunc(func(e *core.RequestEvent) error {
+			// 如果是 GET 请求 且 路径不以 /api 开头，直接跳过鉴权和日志，返回下一处理器
+			// 例如访问静态资源或前端页面时无需鉴权，有暗坑，但大多数场景下是合理的。
+			if e.Request != nil && e.Request.Method == "GET" {
+				p := e.Request.URL.Path
+				if !strings.HasPrefix(p, "/api") {
+					return e.Next()
+				}
+			}
+
 			if e.Auth != nil && e.Auth.IsSuperuser() {
 				return e.Next()
 			}
