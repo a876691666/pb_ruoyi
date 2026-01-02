@@ -18,3 +18,4 @@ collectionList:
 permissionList:
   - system:tenant:list
   - system:tenant_package:list
+  # - custom:api:get

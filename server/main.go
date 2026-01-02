@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"pocketbase-ruoyi/api/auth"
+	"pocketbase-ruoyi/api/custom"
 	"pocketbase-ruoyi/api/monitor"
 	"pocketbase-ruoyi/api/system"
 	"pocketbase-ruoyi/api/system/menu"
@@ -51,6 +52,8 @@ func main() {
 	tenant.RegisterTenant(app)
 
 	auth.RegisterDataScope(app)
+
+	custom.RegisterCustom(app)
 
 	if err := app.Start(); err != nil {
 		log.Fatal(err)

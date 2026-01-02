@@ -17,12 +17,12 @@ import (
 	"github.com/pocketbase/pocketbase/core"
 )
 
+var collWhitelist, permWhitelist = loadRBACWhitelist()
+
 // RegisterRBAC registers a router middleware that computes a permission
 // identifier for collection record routes and attaches any custom checks.
 // It mirrors the logic previously in main.go.
 func RegisterRBAC(app *pocketbase.PocketBase) {
-	// 加载白名单配置（可选），返回 collection 白名单和单一权限白名单
-	collWhitelist, permWhitelist := loadRBACWhitelist()
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 		se.Router.BindFunc(func(e *core.RequestEvent) error {
@@ -102,31 +102,9 @@ func RegisterRBAC(app *pocketbase.PocketBase) {
 						if e.Auth != nil {
 							userID = e.Auth.Id
 						}
-						permissions := menu.GetAllPermissionsByUser(e, userID)
-
-						hasAll := false
-						for _, p := range permissions {
-							if p == "*:*:*" {
-								hasAll = true
-								break
-							}
-						}
-
-						if !hasAll && perm != "" {
-							hasPerm := false
-							for _, p := range permissions {
-								if p == perm {
-									hasPerm = true
-									break
-								}
-							}
-
-							if !hasPerm {
-								// 如果单一权限在白名单中，也跳过拦截
-								if _, ok := permWhitelist[perm]; !ok {
-									blockErr = apis.NewBadRequestError("权限不足", nil)
-								}
-							}
+						// 使用公共函数执行基于 userID 的权限检测（collectionName 的提取仍在调用处完成）
+						if err := EnsureUserHasPermission(e, userID, perm); err != nil {
+							blockErr = err
 						}
 					}
 				}
@@ -374,4 +352,53 @@ func loadRBACWhitelist() (map[string]struct{}, map[string]struct{}) {
 	}
 
 	return collMap, permMap
+}
+
+// EnsureUserHasPermission 封装用户权限检测逻辑：
+// - 若用户拥有通配权限 "*:*:*" 则放行
+// - 若目标 perm 为空则视为允许
+// - 若用户包含 perm 则放行
+// - 若 perm 在白名单中也放行
+// 否则返回一个权限不足的错误
+func EnsureUserHasPermission(e *core.RequestEvent, userID string, perm string) error {
+	permissions := menu.GetAllPermissionsByUser(e, userID)
+
+	for _, p := range permissions {
+		if p == "*:*:*" {
+			return nil
+		}
+	}
+
+	if perm == "" {
+		return nil
+	}
+
+	for _, p := range permissions {
+		if p == perm {
+			return nil
+		}
+	}
+
+	if _, ok := permWhitelist[perm]; ok {
+		return nil
+	}
+
+	return apis.NewBadRequestError("权限不足", nil)
+}
+
+// RBAC is a middleware that checks if the authenticated user has the specified permission.
+// It relies on EnsureUserHasPermission for the actual check so other packages can reuse it.
+func RBAC(permission string) func(e *core.RequestEvent) error {
+	return func(e *core.RequestEvent) error {
+		// 获取 userID（尽量一致的提取逻辑）
+		userID := ""
+		if e.Auth != nil {
+			userID = e.Auth.Id
+		}
+
+		if err := EnsureUserHasPermission(e, userID, permission); err != nil {
+			return err
+		}
+		return e.Next()
+	}
 }
