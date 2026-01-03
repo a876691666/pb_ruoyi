@@ -94,12 +94,21 @@ function convertToSnakeCase(str: string) {
     .replace(/^_/, '');
 }
 
+/**
+ * 将小驼峰命名（camelCase）转换为下划线分割（snake_case）
+ * @param {string} str - 输入的字符串
+ * @returns {string} - 下划线分割的字符串
+ */
+export function camelToSnake(str?: string): string {
+  return (str || '').replaceAll(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
+}
+
 // 处理模板文件列表
 const templateList = Object.entries(templateModules).map(
   ([filePath, content]) => {
     const fileTplCategory =
-      filePath.match(/\/(\w+)_index\.vue$/)?.[1] ||
-      filePath.match(/\/(\w+)_popup\.vue$/)?.[1] ||
+      filePath.match(/\/(\w+)_index\.vue/)?.[1] ||
+      filePath.match(/\/(\w+)_popup\.vue/)?.[1] ||
       '';
     // filePath 格式: /template/xxx/yyy.zzz.vm
     // 移除 /template/ 前缀和 .vm 后缀
@@ -248,18 +257,22 @@ export function generateCodeFromGenInfo(data: GenInfo, isVM = false) {
     moduleName: convertToCamelCase(data.module_name),
     ModuleName: capitalize(convertToCamelCase(data.module_name)),
     _moduleName: data.module_name,
+    module_name: convertToSnakeCase(data.module_name),
 
     businessName: convertToCamelCase(data.business_name),
     BusinessName: capitalize(convertToCamelCase(data.business_name)),
     _businessName: data.business_name,
+    business_name: convertToSnakeCase(data.business_name),
 
     popupComponent: convertToCamelCase(data.options?.popup_type),
     PopupComponent: capitalize(convertToCamelCase(data.options?.popup_type)),
     _popupComponent: data.options?.popup_type,
+    popup_component: convertToSnakeCase(data.options?.popup_type),
 
     formComponent: convertToCamelCase(data.options?.form_type),
     FormComponent: capitalize(convertToCamelCase(data.options?.form_type)),
     _formComponent: data.options?.form_type,
+    form_component: convertToSnakeCase(data.options?.form_type),
   };
 
   return gen(info, isVM);

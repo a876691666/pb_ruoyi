@@ -2,13 +2,13 @@
 
 import type { ID, IDS, PageQuery } from '#/api/common';
 
-import { buildingQuery, commonExport, transformTree } from '#/api/helper';
+import { buildingQuery, commonExport } from '#/api/helper';
 import { pb } from '#/api/request';
 
-const collection = pb.collection<${BusinessName}>('${businessName}');
+const collection = pb.collection<${BusinessName}>('${business_name}');
 
 /**
- * 新增${functionName}
+ * 新增${comment}
  * @param data 参数
  */
 export function ${businessName}Add(data: Partial<${BusinessName}>) {
@@ -16,7 +16,7 @@ export function ${businessName}Add(data: Partial<${BusinessName}>) {
 }
 
 /**
- * 删除${functionName}
+ * 删除${comment}
  * @param ids id列表
  */
 export function ${businessName}Remove(ids: IDS) {
@@ -24,7 +24,7 @@ export function ${businessName}Remove(ids: IDS) {
 }
 
 /**
- * 更新${functionName}
+ * 更新${comment}
  * @param data 参数
  */
 export function ${businessName}Update(data: Partial<${BusinessName}>) {
@@ -33,7 +33,7 @@ export function ${businessName}Update(data: Partial<${BusinessName}>) {
 
 #if($tpl_category != 'tree')
 /**
- * ${functionName}分页列表
+ * ${comment}分页列表
  * @param params 请求参数
  * @returns 列表
  */
@@ -46,7 +46,7 @@ export function ${businessName}List(params?: PageQuery) {
 }
 #else
 /**
- * ${functionName}树
+ * ${comment}树
  * @param params 请求参数
  * @returns 树
  */
@@ -57,7 +57,7 @@ export function ${businessName}List(params?: PageQuery) {
 #end
 
 /**
- * ${functionName}详情
+ * ${comment}详情
  * @param id
  */
 export function ${businessName}Info(id: ID) {
@@ -66,7 +66,7 @@ export function ${businessName}Info(id: ID) {
 
 #if($tpl_category != 'tree')
 /**
- * 导出${functionName}
+ * 导出${comment}
  * @param params 请求参数
  */
 export function ${businessName}Export(params?: PageQuery) {

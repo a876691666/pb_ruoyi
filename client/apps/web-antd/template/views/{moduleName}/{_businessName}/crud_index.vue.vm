@@ -3,7 +3,7 @@ import type { VbenFormProps } from '@vben/common-ui';
 
 import type { VxeGridProps } from '#/adapter/vxe-table';
 import type { QueryType } from '#/api/common';
-import type { ${BusinessName}Form } from '#/api/${moduleName}/${businessName}/model';
+import type { ${BusinessName} } from '#/api/${moduleName}/${businessName}/model';
 
 import { Page, useVben${PopupComponent} } from '@vben/common-ui';
 import { getVxePopupContainer } from '@vben/utils';
@@ -11,11 +11,7 @@ import { getVxePopupContainer } from '@vben/utils';
 import { Modal, Popconfirm, Space } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
-import {
-  useVbenVxeGrid,
-  vxeCheckboxChecked,
-  type VxeGridProps
-} from '#/adapter/vxe-table';
+import { useVbenVxeGrid, vxeCheckboxChecked } from '#/adapter/vxe-table';
 
 import {
   ${businessName}Export,
@@ -25,7 +21,7 @@ import {
 import type { ${BusinessName}Form } from '#/api/${moduleName}/${businessName}/model';
 import { commonDownloadExcel } from '#/utils/file/download';
 
-import ${businessName}${PopupComponent} from './${businessName}-${popupComponent}.vue';
+import popup from './popup.vue';
 import { columns, querySchema } from './data';
 
 const formOptions: VbenFormProps = {
@@ -99,7 +95,7 @@ const [BasicTable, tableApi] = useVbenVxeGrid({
 });
 
 const [${BusinessName}${PopupComponent}, ${popupComponent}Api] = useVben${PopupComponent}({
-  connectedComponent: ${businessName}${PopupComponent},
+  connectedComponent: popup,
 });
 
 function handleAdd() {
@@ -107,19 +103,19 @@ function handleAdd() {
   ${popupComponent}Api.open();
 }
 
-async function handleEdit(row: Required<${BusinessName}Form>) {
+async function handleEdit(row: Required<${BusinessName}>) {
   ${popupComponent}Api.setData({ id: row.${primaryColumn.name} });
   ${popupComponent}Api.open();
 }
 
-async function handleDelete(row: Required<${BusinessName}Form>) {
-  await ${businessName}Remove(row.${primaryColumn.name});
+async function handleDelete(row: Required<${BusinessName}>) {
+  await ${businessName}Remove([row.${primaryColumn.name}]);
   await tableApi.query();
 }
 
 function handleMultiDelete() {
   const rows = tableApi.grid.getCheckboxRecords();
-  const ids = rows.map((row: Required<${BusinessName}Form>) => row.${primaryColumn.name});
+  const ids = rows.map((row: Required<${BusinessName}>) => row.${primaryColumn.name});
   Modal.confirm({
     title: '提示',
     okType: 'danger',
@@ -132,7 +128,7 @@ function handleMultiDelete() {
 }
 
 function handleDownloadExcel() {
-  commonDownloadExcel(${businessName}Export, '${functionName}数据', tableApi.formApi.form.values, {
+  commonDownloadExcel(${businessName}Export, '${comment}数据', tableApi.formApi.form.values, {
     fieldMappingTime: formOptions.fieldMappingTime,
   });
 }
@@ -140,7 +136,7 @@ function handleDownloadExcel() {
 
 <template>
   <Page :auto-content-height="true">
-    <BasicTable table-title="${functionName}列表">
+    <BasicTable table-title="${comment}列表">
       <template #toolbar-tools>
         <Space>
           <a-button
