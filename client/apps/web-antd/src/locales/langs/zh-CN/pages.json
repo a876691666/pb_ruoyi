@@ -17,6 +17,7 @@
     "sync": "同步",
     "refresh": "刷新",
     "generate": "生成",
+    "route_permission": "路由权限",
     "downloadLoading": "下载中, 请稍后...",
     "preview": "预览",
     "tip": "提示",

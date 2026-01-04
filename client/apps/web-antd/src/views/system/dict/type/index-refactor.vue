@@ -160,14 +160,14 @@ watch(searchValue, (value) => {
       <Space>
         <Tooltip :title="$t('pages.common.export')">
           <a-button
-            v-access:code="['system:dict:export']"
+            v-access:code="['dict:export']"
             :icon="h(ExportOutlined)"
             @click="handleDownloadExcel"
           />
         </Tooltip>
         <Tooltip :title="$t('pages.common.add')">
           <a-button
-            v-access:code="['system:dict:add']"
+            v-access:code="['dict:add']"
             :icon="h(PlusOutlined)"
             @click="handleAdd"
           />
@@ -188,7 +188,7 @@ watch(searchValue, (value) => {
         <template #addonAfter>
           <Tooltip title="重置/刷新">
             <SyncOutlined
-              v-access:code="['system:dict:edit']"
+              v-access:code="['dict:edit']"
               @click="handleReset"
             />
           </Tooltip>
@@ -208,7 +208,7 @@ watch(searchValue, (value) => {
             <div class="flex items-center gap-3 text-[17px]">
               <EditOutlined
                 class="text-primary"
-                v-access:code="['system:dict:edit']"
+                v-access:code="['dict:edit']"
                 @click.stop="handleEdit(item)"
               />
               <Popconfirm
@@ -217,7 +217,7 @@ watch(searchValue, (value) => {
                 @confirm="handleDelete(item)"
               >
                 <DeleteOutlined
-                  v-access:code="['system:dict:remove']"
+                  v-access:code="['dict:remove']"
                   class="text-destructive"
                   @click.stop=""
                 />

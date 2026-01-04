@@ -151,7 +151,7 @@ function handleAssignRole(record: Role) {
       <template #toolbar-tools>
         <Space>
           <a-button
-            v-access:code="['system:role:export']"
+            v-access:code="['role:export']"
             @click="handleDownloadExcel"
           >
             {{ $t('pages.common.export') }}
@@ -160,14 +160,14 @@ function handleAssignRole(record: Role) {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:role:remove']"
+            v-access:code="['role:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:role:add']"
+            v-access:code="['role:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -181,7 +181,7 @@ function handleAssignRole(record: Role) {
           :disabled="
             row.id === '1' ||
             row.role_key === 'admin' ||
-            !hasAccessByCodes(['system:role:edit'])
+            !hasAccessByCodes(['role:edit'])
           "
           @reload="tableApi.query()"
         />
@@ -192,19 +192,19 @@ function handleAssignRole(record: Role) {
         <template v-if="!(row.id === '1')">
           <Space>
             <ghost-button
-              v-access:code="['system:role:edit']"
+              v-access:code="['role:edit']"
               @click.stop="handleEdit(row)"
             >
               {{ $t('pages.common.edit') }}
             </ghost-button>
             <ghost-button
-              v-access:code="['system:role:edit']"
+              v-access:code="['role:edit']"
               @click.stop="handleAuthEdit(row)"
             >
               权限
             </ghost-button>
             <ghost-button
-              v-access:code="['system:role:edit']"
+              v-access:code="['role:edit']"
               @click.stop="handleAssignRole(row)"
             >
               分配
@@ -217,7 +217,7 @@ function handleAssignRole(record: Role) {
             >
               <ghost-button
                 danger
-                v-access:code="['system:role:remove']"
+                v-access:code="['role:remove']"
                 @click.stop=""
               >
                 {{ $t('pages.common.delete') }}

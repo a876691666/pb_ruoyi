@@ -144,7 +144,7 @@ function handleDownloadExcel() {
       <template #toolbar-tools>
         <Space>
           <a-button
-            v-access:code="['system:dict:export']"
+            v-access:code="['dict:export']"
             @click="handleDownloadExcel"
           >
             {{ $t('pages.common.export') }}
@@ -153,14 +153,14 @@ function handleDownloadExcel() {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:dict:remove']"
+            v-access:code="['dict:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:dict:add']"
+            v-access:code="['dict:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -170,7 +170,7 @@ function handleDownloadExcel() {
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:dict:edit']"
+            v-access:code="['dict:edit']"
             @click.stop="handleEdit(row)"
           >
             {{ $t('pages.common.edit') }}
@@ -185,7 +185,7 @@ function handleDownloadExcel() {
           >
             <ghost-button
               danger
-              v-access:code="['system:dict:remove']"
+              v-access:code="['dict:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}

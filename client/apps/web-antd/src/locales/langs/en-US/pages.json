@@ -17,6 +17,7 @@
     "sync": "Sync",
     "refresh": "Refresh",
     "generate": "Generate",
+    "route_permission": "Route Permission",
     "downloadLoading": "Downloading... Please wait.",
     "preview": "Preview",
     "tip": "Tip",

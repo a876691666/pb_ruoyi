@@ -9,8 +9,8 @@ import { getVxePopupContainer } from '@vben/utils';
 import { Popconfirm, Space } from 'ant-design-vue';
 
 import { useVbenVxeGrid, type VxeGridProps } from '#/adapter/vxe-table';
-import { ${businessName}List, ${businessName}Remove } from '#/api/${moduleName}/${businessName}';
-import type { ${BusinessName}Form } from '#/api/${moduleName}/${businessName}/model';
+import { ${businessName}List, ${businessName}Remove } from '#/api/${_moduleName}/${_businessName}';
+import type { ${BusinessName}Form } from '#/api/${_moduleName}/${_businessName}/model';
 
 import { columns, querySchema } from './data';
 import ${businessName}${PopupComponent} from './${businessName}-${popupComponent}.vue';

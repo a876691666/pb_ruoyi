@@ -202,7 +202,7 @@ const isAdmin = computed(() => {
 
           <a-button
             type="primary"
-            v-access:code="['system:menu:add']"
+            v-access:code="['menu:add']"
             v-access:role="['superadmin']"
             @click="handleAdd"
           >
@@ -213,7 +213,7 @@ const isAdmin = computed(() => {
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:menu:edit']"
+            v-access:code="['menu:edit']"
             v-access:role="['superadmin']"
             @click="handleEdit(row)"
           >
@@ -223,7 +223,7 @@ const isAdmin = computed(() => {
           <ghost-button
             v-if="row.menuType !== 'F'"
             class="btn-success"
-            v-access:code="['system:menu:add']"
+            v-access:code="['menu:add']"
             v-access:role="['superadmin']"
             @click="handleSubAdd(row)"
           >
@@ -237,7 +237,7 @@ const isAdmin = computed(() => {
           >
             <ghost-button
               danger
-              v-access:code="['system:menu:remove']"
+              v-access:code="['menu:remove']"
               v-access:role="['superadmin']"
               @click.stop=""
             >

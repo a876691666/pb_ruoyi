@@ -167,13 +167,13 @@ function handleSyncTenantDict() {
       <template #toolbar-tools>
         <Space>
           <a-button
-            v-access:code="['system:tenant:edit']"
+            v-access:code="['tenant:edit']"
             @click="handleSyncTenantDict"
           >
             同步租户字典
           </a-button>
           <a-button
-            v-access:code="['system:tenant:export']"
+            v-access:code="['tenant:export']"
             @click="handleDownloadExcel"
           >
             {{ $t('pages.common.export') }}
@@ -182,14 +182,14 @@ function handleSyncTenantDict() {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:tenant:remove']"
+            v-access:code="['tenant:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:tenant:add']"
+            v-access:code="['tenant:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -201,7 +201,7 @@ function handleSyncTenantDict() {
           v-model:value="row.status"
           :api="() => tenantStatusChange(row)"
           :disabled="
-            row.id === '000000' || !hasAccessByCodes(['system:tenant:edit'])
+            row.id === '000000' || !hasAccessByCodes(['tenant:edit'])
           "
           @reload="tableApi.query()"
         />
@@ -209,7 +209,7 @@ function handleSyncTenantDict() {
       <template #action="{ row }">
         <Space v-if="row.id !== '000000'">
           <ghost-button
-            v-access:code="['system:tenant:edit']"
+            v-access:code="['tenant:edit']"
             @click="handleEdit(row)"
           >
             {{ $t('pages.common.edit') }}
@@ -222,7 +222,7 @@ function handleSyncTenantDict() {
           >
             <ghost-button
               class="btn-success"
-              v-access:code="['system:tenant:edit']"
+              v-access:code="['tenant:edit']"
             >
               {{ $t('pages.common.sync') }}
             </ghost-button>
@@ -235,7 +235,7 @@ function handleSyncTenantDict() {
           >
             <ghost-button
               danger
-              v-access:code="['system:tenant:remove']"
+              v-access:code="['tenant:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}

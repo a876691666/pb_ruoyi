@@ -109,7 +109,7 @@ function collapseAll() {
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:tree:add']"
+            v-access:code="['tree:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -119,7 +119,7 @@ function collapseAll() {
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:tree:edit']"
+            v-access:code="['tree:edit']"
             @click.stop="handleEdit(row)"
           >
             {{ $t('pages.common.edit') }}
@@ -132,7 +132,7 @@ function collapseAll() {
           >
             <ghost-button
               danger
-              v-access:code="['system:tree:remove']"
+              v-access:code="['tree:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}

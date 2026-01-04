@@ -211,13 +211,13 @@ const { hasAccessByCodes } = useAccess();
         <template #toolbar-tools>
           <Space>
             <a-button
-              v-access:code="['system:user:export']"
+              v-access:code="['user:export']"
               @click="handleDownloadExcel"
             >
               {{ $t('pages.common.export') }}
             </a-button>
             <a-button
-              v-access:code="['system:user:import']"
+              v-access:code="['user:import']"
               @click="handleImport"
             >
               {{ $t('pages.common.import') }}
@@ -226,14 +226,14 @@ const { hasAccessByCodes } = useAccess();
               :disabled="!vxeCheckboxChecked(tableApi)"
               danger
               type="primary"
-              v-access:code="['system:user:remove']"
+              v-access:code="['user:remove']"
               @click="handleMultiDelete"
             >
               {{ $t('pages.common.delete') }}
             </a-button>
             <a-button
               type="primary"
-              v-access:code="['system:user:add']"
+              v-access:code="['user:add']"
               @click="handleAdd"
             >
               {{ $t('pages.common.add') }}
@@ -248,7 +248,7 @@ const { hasAccessByCodes } = useAccess();
           <TableSwitch
             v-model:value="row.status"
             :api="() => userStatusChange(row)"
-            :disabled="isAdmin(row) || !hasAccessByCodes(['system:user:edit'])"
+            :disabled="isAdmin(row) || !hasAccessByCodes(['user:edit'])"
             @reload="() => tableApi.query()"
           />
         </template>
@@ -256,7 +256,7 @@ const { hasAccessByCodes } = useAccess();
           <template v-if="!isAdmin(row)">
             <Space>
               <ghost-button
-                v-access:code="['system:user:edit']"
+                v-access:code="['user:edit']"
                 @click.stop="handleEdit(row)"
               >
                 {{ $t('pages.common.edit') }}
@@ -269,7 +269,7 @@ const { hasAccessByCodes } = useAccess();
               >
                 <ghost-button
                   danger
-                  v-access:code="['system:user:remove']"
+                  v-access:code="['user:remove']"
                   @click.stop=""
                 >
                   {{ $t('pages.common.delete') }}
@@ -282,7 +282,7 @@ const { hasAccessByCodes } = useAccess();
                   <MenuItem key="1" @click="handleUserInfo(row)">
                     用户信息
                   </MenuItem>
-                  <span v-access:code="['system:user:resetPwd']">
+                  <span v-access:code="['user:resetPwd']">
                     <MenuItem key="2" @click="handleResetPwd(row)">
                       重置密码
                     </MenuItem>

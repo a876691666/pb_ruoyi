@@ -144,7 +144,7 @@ const isSuperAdmin = computed(() => {
       <template #toolbar-tools>
         <Space>
           <a-button
-            v-access:code="['system:tenantPackage:export']"
+            v-access:code="['tenantPackage:export']"
             @click="handleDownloadExcel"
           >
             {{ $t('pages.common.export') }}
@@ -153,14 +153,14 @@ const isSuperAdmin = computed(() => {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:tenantPackage:remove']"
+            v-access:code="['tenantPackage:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:tenantPackage:add']"
+            v-access:code="['tenantPackage:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -171,14 +171,14 @@ const isSuperAdmin = computed(() => {
         <TableSwitch
           v-model:value="row.status"
           :api="() => packageChangeStatus(row)"
-          :disabled="!hasAccessByCodes(['system:tenantPackage:edit'])"
+          :disabled="!hasAccessByCodes(['tenantPackage:edit'])"
           @reload="tableApi.query()"
         />
       </template>
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:tenantPackage:edit']"
+            v-access:code="['tenantPackage:edit']"
             @click="handleEdit(row)"
           >
             {{ $t('pages.common.edit') }}
@@ -191,7 +191,7 @@ const isSuperAdmin = computed(() => {
           >
             <ghost-button
               danger
-              v-access:code="['system:tenantPackage:remove']"
+              v-access:code="['tenantPackage:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}

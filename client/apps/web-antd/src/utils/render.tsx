@@ -6,6 +6,7 @@ import type { DictFallback } from '#/components/dict/src/type';
 import { h } from 'vue';
 
 import { JsonPreview } from '@vben/common-ui';
+import { useAntdDesignTokens } from '@vben/hooks';
 import {
   AndroidIcon,
   BaiduIcon,
@@ -31,8 +32,10 @@ import {
 import { Tag } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict';
+import { RelationTag } from '#/components/relation';
 
 import { getDictOptions } from './dict';
+import { getRelationOptions } from './relation';
 
 /**
  * 渲染标签
@@ -176,7 +179,39 @@ export function renderDict(
   const { fallback } = options ?? {};
   const dictInfo = getDictOptions(dictName);
   return (
-    <DictTag dicts={dictInfo.value} fallback={fallback} value={value}></DictTag>
+    <DictTag
+      dicts={dictInfo.value as unknown as DictData[]}
+      fallback={fallback}
+      value={value}
+    ></DictTag>
+  );
+}
+const { tokens } = useAntdDesignTokens();
+
+/**
+ * 渲染关联表（relation）标签，行为类似 renderDict
+ * @param value 值
+ * @param tableName 关联表名
+ * @param displayField 可选：用于显示文本的字段名（默认为 dict_label）
+ * @param valueField 可选：用于取值的字段名（默认为 dict_value）
+ * @param options 同 renderDict 的可选项
+ */
+export function renderRelation(
+  value: number | string,
+  tableName: string,
+  displayField?: string,
+  valueField?: string,
+  options?: RenderDictOptions,
+) {
+  const { fallback } = options ?? {};
+  const relationInfo = getRelationOptions(tableName, displayField, valueField);
+  return (
+    <RelationTag
+      color={tokens.colorPrimary}
+      fallback={fallback}
+      relations={relationInfo.value}
+      value={value}
+    ></RelationTag>
   );
 }
 

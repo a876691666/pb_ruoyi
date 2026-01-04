@@ -143,7 +143,7 @@ emitter.on('rowClick', async (value) => {
       <template #toolbar-tools>
         <Space>
           <a-button
-            v-access:code="['system:dict:export']"
+            v-access:code="['dict:export']"
             @click="handleDownloadExcel"
           >
             {{ $t('pages.common.export') }}
@@ -152,7 +152,7 @@ emitter.on('rowClick', async (value) => {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:dict:remove']"
+            v-access:code="['dict:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
@@ -160,7 +160,7 @@ emitter.on('rowClick', async (value) => {
           <a-button
             :disabled="dict_type === ''"
             type="primary"
-            v-access:code="['system:dict:add']"
+            v-access:code="['dict:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -170,7 +170,7 @@ emitter.on('rowClick', async (value) => {
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:dict:edit']"
+            v-access:code="['dict:edit']"
             @click="handleEdit(row)"
           >
             {{ $t('pages.common.edit') }}
@@ -185,7 +185,7 @@ emitter.on('rowClick', async (value) => {
           >
             <ghost-button
               danger
-              v-access:code="['system:dict:remove']"
+              v-access:code="['dict:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}

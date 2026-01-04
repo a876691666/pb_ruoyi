@@ -22,6 +22,65 @@ func RegisterDataScope(app *pocketbase.PocketBase) {
 	// Load the data_scope whitelist (return an empty whitelist if the file doesn't exist)
 	collWhitelist := loadDataScopeWhitelist()
 
+	app.OnRecordCreateRequest().BindFunc(func(e *core.RecordRequestEvent) error {
+		if e.Auth != nil && e.Auth.IsSuperuser() {
+			return e.Next()
+		}
+
+		tenantIDField := e.Collection.Fields.GetByName("tenant_id")
+		createDeptField := e.Collection.Fields.GetByName("create_dept")
+		createByField := e.Collection.Fields.GetByName("create_by")
+
+		updateDeptField := e.Collection.Fields.GetByName("update_dept")
+		updateByField := e.Collection.Fields.GetByName("update_by")
+
+		userTenantID := tools.GetUserTenant(e.RequestEvent)
+		userDeptID := e.Auth.GetString("dept_id")
+
+		if tenantIDField != nil {
+			e.Record.Set("tenant_id", userTenantID)
+		}
+
+		if createDeptField != nil {
+			e.Record.Set("create_dept", userDeptID)
+		}
+
+		if createByField != nil {
+			e.Record.Set("create_by", e.Auth.Id)
+		}
+
+		if updateDeptField != nil {
+			e.Record.Set("update_dept", userDeptID)
+		}
+
+		if updateByField != nil {
+			e.Record.Set("update_by", e.Auth.Id)
+		}
+
+		return e.Next()
+	})
+
+	app.OnRecordUpdateRequest().BindFunc(func(e *core.RecordRequestEvent) error {
+		if e.Auth != nil && e.Auth.IsSuperuser() {
+			return e.Next()
+		}
+
+		updateDeptField := e.Collection.Fields.GetByName("update_dept")
+		updateByField := e.Collection.Fields.GetByName("update_by")
+
+		userDeptID := e.Auth.GetString("dept_id")
+
+		if updateDeptField != nil {
+			e.Record.Set("update_dept", userDeptID)
+		}
+
+		if updateByField != nil {
+			e.Record.Set("update_by", e.Auth.Id)
+		}
+
+		return e.Next()
+	})
+
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 		se.Router.BindFunc(func(e *core.RequestEvent) error {
 
@@ -75,7 +134,7 @@ func RegisterDataScope(app *pocketbase.PocketBase) {
 				e.Request.URL.RawQuery = query.Encode()
 			}
 
-			if !IsSuperuserByApp(e) {
+			if IsSuperuserByApp(e) {
 				return e.Next()
 			}
 

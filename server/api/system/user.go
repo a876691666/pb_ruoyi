@@ -35,6 +35,7 @@ type SimpleUser struct {
 type syncUserReq struct {
 	RoleIds []string `json:"role_ids" form:"role_ids"`
 	PostIds []string `json:"post_ids" form:"post_ids"`
+	DeptID  string   `json:"dept_id" form:"dept_id"`
 }
 
 // 暂存创建用户阶段的角色和岗位，待创建成功后再落库（参考 role.go 的实现）
@@ -78,7 +79,7 @@ func syncUser(e *core.RecordRequestEvent) error {
 	)
 
 	if e.Request.Header.Get("X-Dept") == "true" {
-		record, _ := e.App.FindRecordById("dept", e.Record.GetString("dept_id"))
+		record, _ := e.App.FindRecordById("dept", payload.DeptID)
 
 		if record != nil {
 			e.Record.Set("dept_name", record.GetString("dept_name"))

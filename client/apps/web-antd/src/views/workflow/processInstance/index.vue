@@ -204,7 +204,7 @@ function handleInfo(row: any) {
               :disabled="!vxeCheckboxChecked(tableApi)"
               danger
               type="primary"
-              v-access:code="['system:user:remove']"
+              v-access:code="['user:remove']"
               @click="handleMultiDelete"
             >
               {{ $t('pages.common.delete') }}

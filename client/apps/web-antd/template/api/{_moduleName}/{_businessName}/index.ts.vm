@@ -5,7 +5,7 @@ import type { ID, IDS, PageQuery } from '#/api/common';
 import { buildingQuery, commonExport } from '#/api/helper';
 import { pb } from '#/api/request';
 
-const collection = pb.collection<${BusinessName}>('${business_name}');
+const collection = pb.collection<${BusinessName}>('${_businessName}');
 
 /**
  * 新增${comment}

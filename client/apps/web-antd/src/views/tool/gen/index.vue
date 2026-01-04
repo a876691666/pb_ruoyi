@@ -15,12 +15,17 @@ import { message, Modal, Popconfirm, Space } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
 import { useVbenVxeGrid, vxeCheckboxChecked } from '#/adapter/vxe-table';
+import { menuAdd } from '#/api/system/menu';
 import { generatedList, genRemove, syncDb } from '#/api/tool/gen';
 import { downloadByData } from '#/utils/file/download';
 
 import codePreviewModal from './code-preview-modal.vue';
 import { columns, querySchema } from './data';
-import { createZipBlob, generateCodeFromGenInfo } from './index';
+import {
+  convertToSnakeCase,
+  createZipBlob,
+  generateCodeFromGenInfo,
+} from './index';
 import tableImportModal from './table-import-modal.vue';
 
 const queryType: QueryType = {
@@ -101,6 +106,42 @@ function handleEdit(record: Recordable<any>) {
 async function handleSync(record: GenInfo) {
   await syncDb(record);
   await tableApi.query();
+}
+
+async function handleRoutePermission(record: GenInfo) {
+  const { comment, module_name, business_name, options } = record;
+  const { parent_menu_id } = options;
+
+  const menuData = {
+    menu_name: comment,
+    parent_id: parent_menu_id,
+    order_num: 0,
+    path: convertToSnakeCase(business_name),
+    component: `${convertToSnakeCase(module_name)}/${convertToSnakeCase(business_name)}/index`,
+    perms: `${convertToSnakeCase(module_name)}:${convertToSnakeCase(business_name)}:index`,
+    menu_type: 'C',
+    visible: '0',
+    status: '0',
+  };
+
+  const rootMenu = await menuAdd(menuData);
+
+  const permsDisplay = ['新增', '查询', '编辑', '删除', '导出'];
+
+  await Promise.all(
+    ['add', 'query', 'edit', 'remove', 'export'].map((perm, index) => {
+      return menuAdd({
+        menu_name: `${comment}-${permsDisplay[index]}`,
+        parent_id: rootMenu.id,
+        order_num: index + 1,
+        perms: `${convertToSnakeCase(business_name)}:${perm}`,
+        menu_type: 'F',
+        visible: '0',
+        status: '0',
+      });
+    }),
+  );
+  message.success('路由和权限生成成功');
 }
 
 /**
@@ -251,6 +292,21 @@ function handleImport() {
             @click.stop=""
           >
             {{ $t('pages.common.sync') }}
+          </a-button>
+        </Popconfirm>
+        <Popconfirm
+          :get-popup-container="getVxePopupContainer"
+          :title="`生成路由权限[${row.name}]?`"
+          placement="left"
+          @confirm="handleRoutePermission(row)"
+        >
+          <a-button
+            size="small"
+            type="link"
+            v-access:code="['tool:gen:route_permission']"
+            @click.stop=""
+          >
+            {{ $t('pages.common.route_permission') }}
           </a-button>
         </Popconfirm>
         <a-button

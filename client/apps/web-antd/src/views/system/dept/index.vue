@@ -140,7 +140,7 @@ function setExpandOrCollapse(expand: boolean) {
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:dept:add']"
+            v-access:code="['dept:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -149,15 +149,12 @@ function setExpandOrCollapse(expand: boolean) {
       </template>
       <template #action="{ row }">
         <Space>
-          <ghost-button
-            v-access:code="['system:dept:edit']"
-            @click="handleEdit(row)"
-          >
+          <ghost-button v-access:code="['dept:edit']" @click="handleEdit(row)">
             {{ $t('pages.common.edit') }}
           </ghost-button>
           <ghost-button
             class="btn-success"
-            v-access:code="['system:dept:add']"
+            v-access:code="['dept:add']"
             @click="handleSubAdd(row)"
           >
             {{ $t('pages.common.add') }}
@@ -168,11 +165,7 @@ function setExpandOrCollapse(expand: boolean) {
             title="确认删除？"
             @confirm="handleDelete(row)"
           >
-            <ghost-button
-              danger
-              v-access:code="['system:dept:remove']"
-              @click.stop=""
-            >
+            <ghost-button danger v-access:code="['dept:remove']" @click.stop="">
               {{ $t('pages.common.delete') }}
             </ghost-button>
           </Popconfirm>

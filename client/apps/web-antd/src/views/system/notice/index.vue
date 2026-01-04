@@ -120,14 +120,14 @@ function handleMultiDelete() {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:notice:remove']"
+            v-access:code="['notice:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:notice:add']"
+            v-access:code="['notice:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -137,7 +137,7 @@ function handleMultiDelete() {
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:notice:edit']"
+            v-access:code="['notice:edit']"
             @click="handleEdit(row)"
           >
             {{ $t('pages.common.edit') }}
@@ -150,7 +150,7 @@ function handleMultiDelete() {
           >
             <ghost-button
               danger
-              v-access:code="['system:notice:remove']"
+              v-access:code="['notice:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}

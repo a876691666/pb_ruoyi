@@ -46,7 +46,9 @@ export function menuInfo(id: ID) {
  * @param data 参数
  */
 export function menuAdd(data: Partial<Menu>) {
-  return menuCollection.create(data);
+  return menuCollection.create(data, {
+    requestKey: Math.random().toString(16).slice(2),
+  });
 }
 
 /**

@@ -13,8 +13,8 @@ import { renderDict } from '#/utils/render';
 export const querySchema: FormSchemaGetter = () => [
 #foreach($column in $columns)
     #if($column.query)
-      #if($column.dict_type)
-        #set($dictType=$column.dict_type)
+      #if($column.dictType)
+        #set($dictType=$column.dictType)
       #else
         #set($dictType="")
       #end
@@ -22,6 +22,8 @@ export const querySchema: FormSchemaGetter = () => [
 			#set($comment=$getFieldComment($column))
       #if($column.htmlType == "input")
         #set($component="Input")
+      #elseif($column.htmlType == "inputNumber")
+        #set($component="InputNumber")
       #elseif($column.htmlType == "textarea")
         #set($component="Textarea")
       #elseif($column.htmlType == "select")
@@ -97,8 +99,8 @@ export const columns: VxeGridProps['columns'] = [
   #end
   #foreach($column in $columns)
     #if($column.list)
-      #if($column.dict_type)
-        #set($dictType=$column.dict_type)
+      #if($column.dictType)
+        #set($dictType=$column.dictType)
       #else
         #set($dictType="")
       #end
@@ -150,8 +152,8 @@ export const columns: VxeGridProps['columns'] = [
 export const ${options.popup_type}Schema: FormSchemaGetter = () => [
   #foreach($column in $columns)
     #if($column.edit)
-      #if($column.dict_type)
-        #set($dictType=$column.dict_type)
+      #if($column.dictType)
+        #set($dictType=$column.dictType)
       #else
         #set($dictType="")
       #end
@@ -159,6 +161,8 @@ export const ${options.popup_type}Schema: FormSchemaGetter = () => [
 			#set($comment=$getFieldComment($column))
       #if($column.htmlType == "input")
         #set($component="Input")
+      #elseif($column.htmlType == "inputNumber")
+        #set($component="InputNumber")
       #elseif($column.htmlType == "textarea")
         #set($component="Textarea")
       #elseif($column.htmlType == "select")

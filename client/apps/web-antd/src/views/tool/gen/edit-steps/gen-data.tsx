@@ -17,6 +17,7 @@ const queryTypeOptions = [
 
 const componentsOptions = [
   { label: '文本框', value: 'input' },
+  { label: '数字框', value: 'inputNumber' },
   { label: '文本域', value: 'textarea' },
   { label: '下拉框', value: 'select' },
   { label: '单选框', value: 'radio' },

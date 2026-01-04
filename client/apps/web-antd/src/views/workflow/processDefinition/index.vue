@@ -308,17 +308,17 @@ async function handleReload(type: 'add' | 'update') {
               :disabled="!vxeCheckboxChecked(tableApi)"
               danger
               type="primary"
-              v-access:code="['system:user:remove']"
+              v-access:code="['user:remove']"
               @click="handleMultiDelete"
             >
               {{ $t('pages.common.delete') }}
             </a-button>
-            <a-button v-access:code="['system:user:add']" @click="handleDeploy">
+            <a-button v-access:code="['user:add']" @click="handleDeploy">
               部署
             </a-button>
             <a-button
               type="primary"
-              v-access:code="['system:user:add']"
+              v-access:code="['user:add']"
               @click="handleAdd"
             >
               {{ $t('pages.common.add') }}

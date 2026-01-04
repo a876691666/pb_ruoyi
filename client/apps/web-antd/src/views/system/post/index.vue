@@ -27,6 +27,7 @@ const queryType: QueryType = {
   post_code: 'LIKE',
   post_name: 'LIKE',
   status: 'EQ',
+  dept_id: 'IN',
 };
 
 const formOptions: VbenFormProps = {
@@ -64,9 +65,9 @@ const gridOptions: VxeGridProps = {
       query: async ({ page, sorts }, params = {}) => {
         // 部门树选择处理
         if (selectDeptId.value.length === 1) {
-          params.belongDeptId = selectDeptId.value[0];
+          params.dept_id = selectDeptId.value;
         } else {
-          Reflect.deleteProperty(params, 'belongDeptId');
+          Reflect.deleteProperty(params, 'dept_id');
         }
 
         return await postList({
@@ -148,7 +149,7 @@ function handleDownloadExcel() {
       <template #toolbar-tools>
         <Space>
           <a-button
-            v-access:code="['system:post:export']"
+            v-access:code="['post:export']"
             @click="handleDownloadExcel"
           >
             {{ $t('pages.common.export') }}
@@ -157,14 +158,14 @@ function handleDownloadExcel() {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:post:remove']"
+            v-access:code="['post:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:post:add']"
+            v-access:code="['post:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -173,10 +174,7 @@ function handleDownloadExcel() {
       </template>
       <template #action="{ row }">
         <Space>
-          <GhostButton
-            v-access:code="['system:post:edit']"
-            @click="handleEdit(row)"
-          >
+          <GhostButton v-access:code="['post:edit']" @click="handleEdit(row)">
             {{ $t('pages.common.edit') }}
           </GhostButton>
           <Popconfirm
@@ -185,11 +183,7 @@ function handleDownloadExcel() {
             title="确认删除？"
             @confirm="handleDelete(row)"
           >
-            <GhostButton
-              danger
-              v-access:code="['system:post:remove']"
-              @click.stop=""
-            >
+            <GhostButton danger v-access:code="['post:remove']" @click.stop="">
               {{ $t('pages.common.delete') }}
             </GhostButton>
           </Popconfirm>

@@ -15,7 +15,6 @@ import (
 
 // RegisterTenant 注册
 func RegisterTenant(app *pocketbase.PocketBase) {
-	app.OnRecordCreateRequest().BindFunc(autoTenantID)
 
 	// 当创建 tenant 时，补全 tenant_id，并在创建成功后完成角色/部门/用户/字典/配置的初始化
 	app.OnRecordCreateRequest("tenant").BindFunc(ensureTenantID)
@@ -29,32 +28,6 @@ func RegisterTenant(app *pocketbase.PocketBase) {
 	app.OnRecordDeleteExecute("tenant").BindFunc(beforeTenantDelete)
 	// 2) 删除成功后：清理该租户下的角色/部门/用户/字典/配置等数据
 	app.OnRecordAfterDeleteSuccess("tenant").BindFunc(afterTenantDeleted)
-}
-
-func autoTenantID(e *core.RecordRequestEvent) error {
-	collectionNameOrID := e.Request.PathValue("collection")
-	collection, _ := e.App.FindCollectionByNameOrId(collectionNameOrID)
-	collection.Fields.FieldNames()
-
-	isTenantField := false
-	for _, field := range collection.Fields {
-		if field.GetName() == "tenant_id" {
-			isTenantField = true
-			break
-		}
-	}
-
-	if !isTenantField {
-		return e.Next()
-	}
-
-	tenantID := e.Auth.Get("tenant_id")
-
-	if tenantID != nil {
-		e.Record.Set("tenant_id", tenantID)
-	}
-
-	return e.Next()
 }
 
 type tenantCreateRequest struct {

@@ -131,14 +131,14 @@ function handleMultipleAuthCancel() {
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:role:remove']"
+            v-access:code="['role:remove']"
             @click="handleMultipleAuthCancel"
           >
             取消授权
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:role:add']"
+            v-access:code="['role:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -154,7 +154,7 @@ function handleMultipleAuthCancel() {
         >
           <ghost-button
             danger
-            v-access:code="['system:role:remove']"
+            v-access:code="['role:remove']"
             @click.stop=""
           >
             取消授权

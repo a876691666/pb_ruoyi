@@ -199,7 +199,7 @@ function getHtmlType(name: string, type?: string) {
   }
   // 数字类型
   if (type?.includes('number') || type?.includes('int')) {
-    return 'input';
+    return 'inputNumber';
   }
   // 布尔类型
   if (type?.includes('bool')) {

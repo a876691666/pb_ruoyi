@@ -132,7 +132,7 @@ const { hasAccessByCodes } = useAccess();
       <template #toolbar-tools>
         <Space>
           <a-button
-            v-access:code="['system:client:export']"
+            v-access:code="['client:export']"
             @click="handleDownloadExcel"
           >
             {{ $t('pages.common.export') }}
@@ -141,14 +141,14 @@ const { hasAccessByCodes } = useAccess();
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:client:remove']"
+            v-access:code="['client:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
             type="primary"
-            v-access:code="['system:client:add']"
+            v-access:code="['client:add']"
             @click="handleAdd"
           >
             {{ $t('pages.common.add') }}
@@ -161,14 +161,14 @@ const { hasAccessByCodes } = useAccess();
         <TableSwitch
           v-model:value="row.status"
           :api="() => clientChangeStatus(row)"
-          :disabled="row.id === 1 || !hasAccessByCodes(['system:client:edit'])"
+          :disabled="row.id === 1 || !hasAccessByCodes(['client:edit'])"
           @reload="tableApi.query()"
         />
       </template>
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:client:edit']"
+            v-access:code="['client:edit']"
             @click.stop="handleEdit(row)"
           >
             {{ $t('pages.common.edit') }}
@@ -183,7 +183,7 @@ const { hasAccessByCodes } = useAccess();
             <ghost-button
               :disabled="row.id === 1"
               danger
-              v-access:code="['system:client:remove']"
+              v-access:code="['client:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}

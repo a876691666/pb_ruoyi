@@ -3,7 +3,7 @@ import type { VbenFormProps } from '@vben/common-ui';
 
 import type { VxeGridProps } from '#/adapter/vxe-table';
 import type { QueryType } from '#/api/common';
-import type { ${BusinessName} } from '#/api/${moduleName}/${businessName}/model';
+import type { ${BusinessName} } from '#/api/${_moduleName}/${_businessName}/model';
 
 import { Page, useVben${PopupComponent} } from '@vben/common-ui';
 import { getVxePopupContainer } from '@vben/utils';
@@ -17,8 +17,8 @@ import {
   ${businessName}Export,
   ${businessName}List,
   ${businessName}Remove,
-} from '#/api/${moduleName}/${businessName}';
-import type { ${BusinessName}Form } from '#/api/${moduleName}/${businessName}/model';
+} from '#/api/${_moduleName}/${_businessName}';
+import type { ${BusinessName}Form } from '#/api/${_moduleName}/${_businessName}/model';
 import { commonDownloadExcel } from '#/utils/file/download';
 
 import popup from './popup.vue';
@@ -26,7 +26,7 @@ import { columns, querySchema } from './data';
 
 const formOptions: VbenFormProps = {
   commonConfig: {
-    labelWidth: 0,
+    labelWidth: 110,
     componentProps: {
       allowClear: true,
     },

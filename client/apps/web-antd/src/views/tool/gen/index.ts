@@ -88,7 +88,7 @@ function getBool(str: string) {
   return str === '1' ? 'true' : 'false';
 }
 
-function convertToSnakeCase(str: string) {
+export function convertToSnakeCase(str: string) {
   return str
     .replaceAll(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)
     .replace(/^_/, '');
@@ -246,33 +246,29 @@ export function generateCodeFromGenInfo(data: GenInfo, isVM = false) {
   const info = {
     primaryColumn,
     primaryKey,
-    permissionPrefix: `${data.module_name}:${data.business_name}`,
+    permissionPrefix: `${convertToSnakeCase(data.module_name)}:${convertToSnakeCase(data.business_name)}`,
     ...data,
     columns,
 
     functionName: convertToCamelCase(data.function_name),
     FunctionName: capitalize(convertToCamelCase(data.function_name)),
-    _functionName: data.function_name,
+    _functionName: convertToSnakeCase(data.function_name),
 
     moduleName: convertToCamelCase(data.module_name),
     ModuleName: capitalize(convertToCamelCase(data.module_name)),
-    _moduleName: data.module_name,
-    module_name: convertToSnakeCase(data.module_name),
+    _moduleName: convertToSnakeCase(data.module_name),
 
     businessName: convertToCamelCase(data.business_name),
     BusinessName: capitalize(convertToCamelCase(data.business_name)),
-    _businessName: data.business_name,
-    business_name: convertToSnakeCase(data.business_name),
+    _businessName: convertToSnakeCase(data.business_name),
 
     popupComponent: convertToCamelCase(data.options?.popup_type),
     PopupComponent: capitalize(convertToCamelCase(data.options?.popup_type)),
-    _popupComponent: data.options?.popup_type,
-    popup_component: convertToSnakeCase(data.options?.popup_type),
+    _popupComponent: convertToSnakeCase(data.options?.popup_type),
 
     formComponent: convertToCamelCase(data.options?.form_type),
     FormComponent: capitalize(convertToCamelCase(data.options?.form_type)),
-    _formComponent: data.options?.form_type,
-    form_component: convertToSnakeCase(data.options?.form_type),
+    _formComponent: convertToSnakeCase(data.options?.form_type),
   };
 
   return gen(info, isVM);

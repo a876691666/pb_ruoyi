@@ -201,19 +201,19 @@ const [FileUploadModal, fileUploadApi] = useVbenModal({
             :disabled="!vxeCheckboxChecked(tableApi)"
             danger
             type="primary"
-            v-access:code="['system:oss:remove']"
+            v-access:code="['oss:remove']"
             @click="handleMultiDelete"
           >
             {{ $t('pages.common.delete') }}
           </a-button>
           <a-button
-            v-access:code="['system:oss:upload']"
+            v-access:code="['oss:upload']"
             @click="fileUploadApi.open"
           >
             文件上传
           </a-button>
           <a-button
-            v-access:code="['system:oss:upload']"
+            v-access:code="['oss:upload']"
             @click="imageUploadApi.open"
           >
             图片上传
@@ -248,7 +248,7 @@ const [FileUploadModal, fileUploadApi] = useVbenModal({
       <template #action="{ row }">
         <Space>
           <ghost-button
-            v-access:code="['system:oss:download']"
+            v-access:code="['oss:download']"
             @click="handleDownload(row)"
           >
             {{ $t('pages.common.download') }}
@@ -261,7 +261,7 @@ const [FileUploadModal, fileUploadApi] = useVbenModal({
           >
             <ghost-button
               danger
-              v-access:code="['system:oss:remove']"
+              v-access:code="['oss:remove']"
               @click.stop=""
             >
               {{ $t('pages.common.delete') }}
