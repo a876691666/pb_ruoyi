@@ -246,7 +246,7 @@ export function generateCodeFromGenInfo(data: GenInfo, isVM = false) {
   const info = {
     primaryColumn,
     primaryKey,
-    permissionPrefix: `${convertToSnakeCase(data.module_name)}:${convertToSnakeCase(data.business_name)}`,
+    permissionPrefix: `${convertToSnakeCase(data.business_name)}`,
     ...data,
     columns,
 

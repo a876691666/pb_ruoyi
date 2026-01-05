@@ -2,6 +2,7 @@ package auth
 
 import (
 	"github.com/pocketbase/dbx"
+	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 )
 
@@ -53,4 +54,12 @@ func IsAdminByApp(e *core.RequestEvent) bool {
 	query.Row(&count)
 
 	return count > 0
+}
+
+// ISBA 检查指定应用中的用户是否为超级管理员
+func ISBA(e *core.RequestEvent) error {
+	if IsSuperuserByApp(e) {
+		return e.Next()
+	}
+	return apis.NewBadRequestError("没有权限", nil)
 }

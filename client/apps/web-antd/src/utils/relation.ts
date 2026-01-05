@@ -2,7 +2,7 @@ import type { ShallowRef } from 'vue';
 
 import type { RelationOption } from '#/store/relation';
 
-import { shallowRef } from 'vue';
+import { shallowRef, watchEffect } from 'vue';
 
 import { UnauthorizedException } from '#/api/helper';
 import { pb } from '#/api/request';
@@ -19,6 +19,38 @@ import { useRelationStore } from '#/store/relation';
  */
 // 缓存每个 tableName+fields 对应的 shallowRef，确保同名返回同一引用
 const relationOptionsRefMap = new Map<string, ShallowRef<RelationOption[]>>();
+
+// 缓存每个 id 校验的 shallowRef
+const relationValidationRefMap = new Map<string, ShallowRef<boolean>>();
+
+/**
+ * 校验 relation 缓存中是否存在指定 id
+ * @param tableName 表名称
+ * @param id 要校验的 id
+ * @param valueField value 字段名，默认为 'id'
+ * @returns 返回 shallowRef<boolean>，当 relation 数据更新时自动更新
+ */
+export function validateRelationId(
+  tableName: string,
+  id: number | string,
+  valueField: string = 'id',
+): ShallowRef<boolean> {
+  const key = `${tableName}::${valueField}::${id}`;
+  let validationRef = relationValidationRefMap.get(key);
+
+  if (!validationRef) {
+    validationRef = shallowRef(false);
+    relationValidationRefMap.set(key, validationRef);
+
+    const optionsRef = getRelationOptions(tableName, 'name', valueField);
+    watchEffect(() => {
+      if (!validationRef) return;
+      validationRef.value = optionsRef.value.some((opt) => opt.value === id);
+    });
+  }
+
+  return validationRef;
+}
 
 export function getRelationOptions(
   tableName: string,

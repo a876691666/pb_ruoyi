@@ -404,6 +404,10 @@ func RBAC(permission string) func(e *core.RequestEvent) error {
 			userID = e.Auth.Id
 		}
 
+		if IsSuperuser(e) {
+			return e.Next()
+		}
+
 		if err := EnsureUserHasPermission(e, userID, permission); err != nil {
 			return err
 		}
